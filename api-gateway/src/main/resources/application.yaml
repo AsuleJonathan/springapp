@@ -1,0 +1,28 @@
+server:
+  port: 7000
+spring:
+  application:
+    name: api-gateway
+  config:
+    import: optional:configserver:http://localhost:8888
+  cloud:
+    gateway:
+      routes:
+        - id: products
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/products/**
+        - id: hello
+          uri: lb://PRODUCT-SERVICE
+          predicates:
+            - Path=/api/hello
+        - id: order
+          uri: lb://ORDER-SERVICE
+          predicates:
+            - Path=/api/orders/**
+        - id: inventory
+          uri: lb://INVENTORY
+          predicates:
+            - Path=/api/inventory/**
+ 
+
